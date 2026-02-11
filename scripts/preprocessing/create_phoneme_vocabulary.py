@@ -105,7 +105,7 @@ def create_phoneme_vocabulary(
 
     logger.info("\nMost common phonemes:")
     for i, (phoneme, count) in enumerate(sorted_phonemes[:20]):
-        logger.info(f"  {i+1}. '{phoneme}': {count} occurrences")
+        logger.info(f"  {i + 1}. '{phoneme}': {count} occurrences")
 
     if len(sorted_phonemes) > 20:
         logger.info("  ...")

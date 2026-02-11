@@ -70,23 +70,23 @@ def collate_fn_tts_with_features(dataset_items: List[Dict[str, Any]]) -> Dict[st
 
             if mel.shape[0] == 80 and mel.shape[1] != 80:
                 time_len = mel.shape[1]
-                logger.debug(f"  -> Format: (n_mels, time), time_len = {time_len}")
+                logger.debug(f"-> Format: (n_mels, time), time_len = {time_len}")
                 return time_len  # (n_mels, time)
             if mel.shape[1] == 80 and mel.shape[0] != 80:
                 time_len = mel.shape[0]
-                logger.debug(f"  -> Format: (time, n_mels), time_len = {time_len}")
+                logger.debug(f"-> Format: (time, n_mels), time_len = {time_len}")
                 return time_len  # (time, n_mels)
             if mel.shape[0] == 80 and mel.shape[1] == 80:
                 time_len = mel.shape[1]
                 logger.debug(
-                    f"  -> Format: (n_mels, time) [square], time_len = {time_len}"
+                    f"-> Format: (n_mels, time) [square], time_len = {time_len}"
                 )
                 return time_len
 
             logger.error(f"[COLLATE] ERROR: Unexpected mel shape for {audio_id}")
             logger.error(f"  Shape: {mel.shape}")
             logger.error(f"  Dtype: {mel.dtype}")
-            logger.error(f"  Min/Max values: {mel.min():.3f} / {mel.max():.3f}")
+            logger.error(f"  Min/Max values: {mel.min(): .3f} / {mel.max(): .3f}")
             logger.error("  Expected: one dimension should be 80 (n_mels)")
             raise ValueError(
                 f"Unexpected mel shape: {mel.shape}. Expected one dim == 80."

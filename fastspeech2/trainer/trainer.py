@@ -109,7 +109,7 @@ class Trainer(BaseTrainer):
                 cmap="viridis",
             )
             axes[0].set_title(
-                f"{mode.capitalize()} - Target Mel-Spectrogram (Sample {idx+1})"
+                f"{mode.capitalize()} - Target Mel-Spectrogram (Sample {idx + 1})"
             )
             axes[0].set_ylabel("Mel bin")
             axes[0].set_xlabel("Frame")
@@ -123,7 +123,7 @@ class Trainer(BaseTrainer):
                 cmap="viridis",
             )
             axes[1].set_title(
-                f"{mode.capitalize()} - Predicted Mel-Spectrogram (Sample {idx+1})"
+                f"{mode.capitalize()} - Predicted Mel-Spectrogram (Sample {idx + 1})"
             )
             axes[1].set_ylabel("Mel bin")
             axes[1].set_xlabel("Frame")
@@ -137,7 +137,7 @@ class Trainer(BaseTrainer):
                 cmap="hot",
             )
             axes[2].set_title(
-                f"{mode.capitalize()} - Absolute Difference |pred - target| (Sample {idx+1})"
+                f"{mode.capitalize()} - Absolute Difference |pred - target| (Sample {idx + 1})"
             )
             axes[2].set_ylabel("Mel bin")
             axes[2].set_xlabel("Frame")
@@ -145,7 +145,7 @@ class Trainer(BaseTrainer):
 
             plt.tight_layout()
 
-            self.writer.add_figure(f"{mode}/mel_comparison_sample_{idx+1}", fig)
+            self.writer.add_figure(f"{mode}/mel_comparison_sample_{idx + 1}", fig)
             plt.close(fig)
 
     def _log_predictions(self, batch, mode="train"):
@@ -318,7 +318,7 @@ class Trainer(BaseTrainer):
 
                 if mel_len == 0 or mel_pred.shape[-1] == 0:
                     self.logger.warning(
-                        f"Skipping audio sample {idx+1}: empty mel-spectrogram (length={mel_len})"
+                        f"Skipping audio sample {idx + 1}: empty mel-spectrogram (length={mel_len})"
                     )
                     continue
 
@@ -369,13 +369,15 @@ class Trainer(BaseTrainer):
                     audio_metadata["mel_length"] = mel_len
 
                 self.writer.add_audio(
-                    f"{mode}/audio_sample_{idx+1}",
+                    f"{mode}/audio_sample_{idx + 1}",
                     audio,
                     sample_rate=sample_rate,
                     metadata=audio_metadata,
                 )
 
-                log_msg = f"Logged audio sample {idx+1} to {mode}/audio_sample_{idx+1}"
+                log_msg = (
+                    f"Logged audio sample {idx + 1} to {mode}/audio_sample_{idx + 1}"
+                )
                 if text_content:
                     log_msg += (
                         f" | Text: '{text_content[:50]}...'"
@@ -390,13 +392,13 @@ class Trainer(BaseTrainer):
                     target_metadata["type"] = "target"
 
                     self.writer.add_audio(
-                        f"{mode}/audio_target_sample_{idx+1}",
+                        f"{mode}/audio_target_sample_{idx + 1}",
                         target_audio,
                         sample_rate=sample_rate,
                         metadata=target_metadata,
                     )
                     self.logger.info(
-                        f"Logged target audio sample {idx+1} to {mode}/audio_target_sample_{idx+1}"
+                        f"Logged target audio sample {idx + 1} to {mode}/audio_target_sample_{idx + 1}"
                     )
 
         except ImportError as e:

@@ -117,7 +117,7 @@ def main():
     print(f"Total phonemes: {stats['total_phonemes']}")
     print(f"Total tokens: {stats['total_tokens']}")
     print(
-        f"Unknown tokens: {stats['unk_count']} ({stats['unk_count']/max(stats['total_tokens'], 1)*100:.2f}%)"
+        f"Unknown tokens: {stats['unk_count']} ({stats['unk_count'] / max(stats['total_tokens'], 1) * 100: .2f}%)"
     )
     print(f"\nOutput directory: {output_dir}")
     print("=" * 60)
@@ -132,7 +132,7 @@ def main():
         token_file = output_dir / phoneme_file.name
         tokens = np.load(token_file)
 
-        print(f"\n{phoneme_file.name}:")
+        print(f"\n{phoneme_file.name}")
         print(f"  Phonemes ({len(phonemes)}): {phonemes[:5]}...")
         print(f"  Tokens ({len(tokens)}): {tokens[:5]}...")
 

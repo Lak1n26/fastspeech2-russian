@@ -122,7 +122,7 @@ def prepare_mfa_corpus(
         sample_text_file = text_files[0]
         with open(sample_text_file, "r", encoding="utf-8") as f:
             sample_text = f.read()
-        logger.info(f"\nSample text file ({sample_text_file.name}):")
+        logger.info(f"\nSample text file ({sample_text_file.name})")
         logger.info(f"  {sample_text}")
 
 

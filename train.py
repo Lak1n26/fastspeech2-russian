@@ -11,11 +11,11 @@ import torch
 from hydra.utils import instantiate
 from omegaconf import OmegaConf
 
-sys.path.append(str(Path(__file__).parent))
-
 from fastspeech2.datasets.data_utils import get_dataloaders
 from fastspeech2.trainer import Trainer
 from fastspeech2.utils.init_utils import set_random_seed, setup_saving_and_logging
+
+sys.path.append(str(Path(__file__).parent))
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -99,8 +99,8 @@ def main(config):
 
     total_params = sum(p.numel() for p in model.parameters())
     trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    logger.info(f"\nTotal parameters: {total_params:,}")
-    logger.info(f"Trainable parameters: {trainable_params:,}")
+    logger.info(f"\nTotal parameters: {total_params}")
+    logger.info(f"Trainable parameters: {trainable_params}")
 
     if config.trainer.get("freeze_encoder_decoder", False):
         logger.info("\n" + "=" * 60)

@@ -210,8 +210,8 @@ class FastSpeech2(nn.Module):
         )
 
         result_info = super().__str__()
-        result_info = result_info + f"\nAll parameters: {all_parameters:,}"
-        result_info = result_info + f"\nTrainable parameters: {trainable_parameters:,}"
+        result_info = result_info + f"\nAll parameters: {all_parameters}"
+        result_info = result_info + f"\nTrainable parameters: {trainable_parameters}"
 
         return result_info
 

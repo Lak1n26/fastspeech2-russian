@@ -214,11 +214,11 @@ def format_number(num):
     Format large numbers with K, M, B suffixes.
     """
     if num >= 1_000_000_000:
-        return f"{num / 1_000_000_000:.2f}B"
+        return f"{num / 1_000_000_000: .2f}B"
     elif num >= 1_000_000:
-        return f"{num / 1_000_000:.2f}M"
+        return f"{num / 1_000_000: .2f}M"
     elif num >= 1_000:
-        return f"{num / 1_000:.2f}K"
+        return f"{num / 1_000: .2f}K"
     else:
         return str(num)
 

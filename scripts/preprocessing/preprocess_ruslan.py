@@ -220,11 +220,11 @@ def preprocess_dataset(
         pitch_std = all_voiced_pitch.std().item()
 
         logger.info("\nPitch statistics:")
-        logger.info(f"  Mean: {pitch_mean:.2f} Hz")
-        logger.info(f"  Std:  {pitch_std:.2f} Hz")
-        logger.info(f"  Min:  {all_voiced_pitch.min().item():.2f} Hz")
-        logger.info(f"  Max:  {all_voiced_pitch.max().item():.2f} Hz")
-        logger.info(f"  Total voiced frames: {len(all_voiced_pitch):,}")
+        logger.info(f"  Mean: {pitch_mean: .2f} Hz")
+        logger.info(f"  Std: {pitch_std: .2f} Hz")
+        logger.info(f"  Min: {all_voiced_pitch.min().item(): .2f} Hz")
+        logger.info(f"  Max: {all_voiced_pitch.max().item(): .2f} Hz")
+        logger.info(f"  Total voiced frames: {len(all_voiced_pitch)}")
 
         stats = {
             "pitch_mean": pitch_mean,
@@ -289,10 +289,10 @@ def preprocess_dataset(
             if all_pitch:
                 all_pitch = np.concatenate(all_pitch)
                 logger.info("\nNormalized pitch statistics (sample):")
-                logger.info(f"  Mean: {all_pitch.mean():.3f}")
-                logger.info(f"  Std:  {all_pitch.std():.3f}")
-                logger.info(f"  Min:  {all_pitch.min():.3f}")
-                logger.info(f"  Max:  {all_pitch.max():.3f}")
+                logger.info(f"  Mean: {all_pitch.mean(): .3f}")
+                logger.info(f"  Std: {all_pitch.std(): .3f}")
+                logger.info(f"  Min: {all_pitch.min(): .3f}")
+                logger.info(f"  Max: {all_pitch.max(): .3f}")
 
     logger.info("Preprocessing complete!")
 

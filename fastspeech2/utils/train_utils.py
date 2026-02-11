@@ -55,7 +55,7 @@ def freeze_encoder_decoder(model: nn.Module):
         trainable_params = sum(
             p.numel() for p in model.variance_adaptor.parameters() if p.requires_grad
         )
-        logger.info(f"Trainable parameters in variance adaptor: {trainable_params:,}")
+        logger.info(f"Trainable parameters in variance adaptor: {trainable_params}")
 
 
 def freeze_all_except_emotion(model: nn.Module):
@@ -89,14 +89,14 @@ def freeze_all_except_emotion(model: nn.Module):
             emotion_trainable += sum(
                 p.numel() for p in va.emotion_predictor.parameters() if p.requires_grad
             )
-            logger.info("✓ Emotion predictor remains trainable")
+            logger.info("Emotion predictor remains trainable")
         if hasattr(va, "emotion_embedding"):
             emotion_trainable += sum(
                 p.numel() for p in va.emotion_embedding.parameters() if p.requires_grad
             )
-            logger.info("✓ Emotion embedding remains trainable")
+            logger.info("Emotion embedding remains trainable")
 
-        logger.info(f"Trainable emotion parameters: {emotion_trainable:,}")
+        logger.info(f"Trainable emotion parameters: {emotion_trainable}")
 
 
 def unfreeze_all(model: nn.Module):
@@ -113,7 +113,7 @@ def unfreeze_all(model: nn.Module):
         unfreeze_module(model.decoder, "decoder")
 
     total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    logger.info(f"Total trainable parameters: {total_params:,}")
+    logger.info(f"Total trainable parameters: {total_params}")
 
 
 def freeze_specific_modules(model: nn.Module, modules_to_freeze: List[str]):
@@ -125,7 +125,7 @@ def freeze_specific_modules(model: nn.Module, modules_to_freeze: List[str]):
             module = getattr(model, module_name)
             freeze_module(module, module_name)
         else:
-            logger.warning(f"Module '{module_name}' not found in model")
+            logger.warning(f"Module '{module_name}' not in model")
 
 
 def print_trainable_parameters(model: nn.Module):
@@ -143,20 +143,18 @@ def print_trainable_parameters(model: nn.Module):
         num_params = param.numel()
         if param.requires_grad:
             trainable_params += num_params
-            logger.debug(f"✓ {name}: {num_params:,}")
         else:
             frozen_params += num_params
-            logger.debug(f"✗ {name}: {num_params:,}")
 
     total_params = trainable_params + frozen_params
 
     logger.info(
-        f"Trainable parameters: {trainable_params:,} ({100 * trainable_params / total_params:.2f}%)"
+        f"Trainable parameters: {trainable_params} ({100 * trainable_params / total_params: .2f}%)"
     )
     logger.info(
-        f"Frozen parameters: {frozen_params:,} ({100 * frozen_params / total_params:.2f}%)"
+        f"Frozen parameters: {frozen_params} ({100 * frozen_params / total_params: .2f}%)"
     )
-    logger.info(f"Total parameters: {total_params:,}")
+    logger.info(f"Total parameters: {total_params}")
     logger.info("=" * 60)
 
 

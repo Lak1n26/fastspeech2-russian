@@ -125,7 +125,7 @@ def extract_durations_from_alignments(
     logger.info(f"Output directory: {output_path}")
     logger.info(f"Hop length: {hop_length}")
     logger.info(f"Sample rate: {sample_rate}")
-    logger.info(f"Frame shift: {hop_length / sample_rate:.4f} seconds")
+    logger.info(f"Frame shift: {hop_length / sample_rate: .4f} seconds")
 
     parser = TextGridParser(hop_length, sample_rate)
 
@@ -176,14 +176,14 @@ def extract_durations_from_alignments(
 
     if duration_files:
         sample_duration = np.load(duration_files[0])
-        logger.info(f"\nSample duration ({duration_files[0].name}):")
+        logger.info(f"\nSample duration ({duration_files[0].name})")
         logger.info(f"  Shape: {sample_duration.shape}")
         logger.info(f"  Min: {sample_duration.min()}")
         logger.info(f"  Max: {sample_duration.max()}")
-        logger.info(f"  Mean: {sample_duration.mean():.2f}")
+        logger.info(f"  Mean: {sample_duration.mean(): .2f}")
         logger.info(f"  Total frames: {sample_duration.sum()}")
         logger.info(
-            f"  Duration (seconds): {sample_duration.sum() * hop_length / sample_rate:.2f}"
+            f"  Duration (seconds): {sample_duration.sum() * hop_length / sample_rate: .2f}"
         )
 
         all_durations = []
@@ -193,13 +193,13 @@ def extract_durations_from_alignments(
 
         all_durations = np.array(all_durations)
         logger.info(
-            f"\nOverall statistics (from {min(1000, len(duration_files))} files):"
+            f"\nOverall statistics (from {min(1000, len(duration_files))} files)"
         )
         logger.info(f"  Total phonemes: {len(all_durations)}")
         logger.info(f"  Min duration: {all_durations.min()} frames")
         logger.info(f"  Max duration: {all_durations.max()} frames")
-        logger.info(f"  Mean duration: {all_durations.mean():.2f} frames")
-        logger.info(f"  Median duration: {np.median(all_durations):.2f} frames")
+        logger.info(f"  Mean duration: {all_durations.mean(): .2f} frames")
+        logger.info(f"  Median duration: {np.median(all_durations): .2f} frames")
 
 
 def main():

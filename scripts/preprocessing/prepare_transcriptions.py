@@ -185,7 +185,7 @@ def main():
         logger.info("Длина текста (символы):")
         logger.info(f"  Минимум: {min(text_lengths)}")
         logger.info(f"  Максимум: {max(text_lengths)}")
-        logger.info(f"  Среднее: {sum(text_lengths) / len(text_lengths):.1f}")
+        logger.info(f"  Среднее: {sum(text_lengths) / len(text_lengths): .1f}")
 
         logger.info("\nПримеры (первые 3):")
         for i, (audio_id, text) in enumerate(list(transcriptions.items())[:3]):

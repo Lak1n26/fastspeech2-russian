@@ -147,7 +147,7 @@ class BaseTrainer:
             logs.update(result)
 
             for key, value in logs.items():
-                self.logger.info(f"    {key:15s}: {value}")
+                self.logger.info(f"    {key: 15s}: {value}")
 
             best, stop_process, not_improved_count = self._monitor_performance(
                 logs, not_improved_count

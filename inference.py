@@ -2,13 +2,10 @@
 FastSpeech2 Inference Script
 """
 
-import os
-
-os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-
 import argparse
 import json
 import logging
+import os
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -18,6 +15,8 @@ from scipy.ndimage import median_filter
 from scipy.signal import butter, medfilt, savgol_filter, sosfilt
 
 from fastspeech2.model import FastSpeech2
+
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -202,10 +201,10 @@ class EnhancedFastSpeech2Inferencer:
                 model_config["pitch_max"] = pitch_stats.get("pitch_max", 800.0)
 
                 logger.info(f"Loaded pitch statistics from {self.pitch_stats_path}")
-                logger.info(f"  Pitch mean: {model_config['pitch_mean']:.2f} Hz")
-                logger.info(f"  Pitch std: {model_config['pitch_std']:.2f} Hz")
+                logger.info(f"  Pitch mean: {model_config['pitch_mean']: .2f} Hz")
+                logger.info(f"  Pitch std: {model_config['pitch_std']: .2f} Hz")
                 logger.info(
-                    f"  Pitch range: [{model_config['pitch_min']:.1f}, {model_config['pitch_max']:.1f}] Hz"
+                    f"  Pitch range: [{model_config['pitch_min']: .1f}, {model_config['pitch_max']: .1f}] Hz"
                 )
             except Exception as e:
                 logger.warning(
@@ -485,7 +484,7 @@ class EnhancedFastSpeech2Inferencer:
         num_clipped = np.sum((mel < self.mel_clip_min) | (mel > self.mel_clip_max))
         if num_clipped > 0:
             logger.debug(
-                f"Clipped {num_clipped} mel values ({num_clipped / mel.size * 100:.2f}%)"
+                f"Clipped {num_clipped} mel values ({num_clipped / mel.size * 100: .2f}%)"
             )
 
         return mel_clipped
@@ -729,7 +728,7 @@ def batch_inference(
     logger.info(f"Processing {len(texts)} texts...")
 
     for i, text in enumerate(texts):
-        logger.info(f"\n[{i+1}/{len(texts)}] Processing: {text[:50]}...")
+        logger.info(f"\n[{i + 1}/{len(texts)}] Processing: {text[:50]}...")
 
         try:
             mel, emotion_name = inferencer.synthesize(
@@ -740,7 +739,7 @@ def batch_inference(
                 emotion_control=emotion_control,
             )
 
-            mel_path = output_path / f"output_{i:04d}.npy"
+            mel_path = output_path / f"output_{i: 04d}.npy"
             inferencer.save_mel(mel, str(mel_path))
 
             if vocoder != "none":
@@ -750,7 +749,7 @@ def batch_inference(
                     vocoder_path=vocoder_checkpoint,
                     waveglow_params_path=waveglow_params,
                 )
-                wav_path = output_path / f"output_{i:04d}.wav"
+                wav_path = output_path / f"output_{i: 04d}.wav"
                 inferencer.save_audio(audio, str(wav_path), sample_rate=sample_rate)
 
             metadata = {
@@ -772,7 +771,7 @@ def batch_inference(
                 },
             }
 
-            metadata_path = output_path / f"output_{i:04d}.json"
+            metadata_path = output_path / f"output_{i: 04d}.json"
             with open(metadata_path, "w", encoding="utf-8") as f:
                 json.dump(metadata, f, ensure_ascii=False, indent=2)
 
@@ -938,13 +937,13 @@ def main():
     logger.info("  - Energy smoothing: success!")
     logger.info("  - Punctuation pauses: success!")
     logger.info(
-        f"  - Mel temporal smoothing: {'success!' if not args.no_mel_smoothing else 'skipped.'}"
+        f"- Mel temporal smoothing: {'success!' if not args.no_mel_smoothing else 'skipped.'}"
     )
     logger.info(
-        f"  - Mel value clipping: {'success!' if not args.no_mel_smoothing else 'skipped.'} (range: [{args.mel_clip_min}, {args.mel_clip_max}])"
+        f"- Mel value clipping: {'success!' if not args.no_mel_smoothing else 'skipped.'} (range: [{args.mel_clip_min}, {args.mel_clip_max}])"
     )
     logger.info(
-        f"  - Audio post-processing: {'success!' if not args.no_audio_postprocessing else 'skipped.'}"
+        f"- Audio post-processing: {'success!' if not args.no_audio_postprocessing else 'skipped.'}"
     )
 
     if args.text:

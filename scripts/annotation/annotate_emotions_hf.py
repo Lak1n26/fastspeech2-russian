@@ -272,10 +272,10 @@ class RussianEmotionRecognizer:
         logger.info("\nРаспределение эмоций:")
         for emotion, count in sorted(emotion_counts.items(), key=lambda x: -x[1]):
             percentage = count / len(results) * 100
-            logger.info(f"  {emotion:15s}: {count:5d} ({percentage:5.1f}%)")
+            logger.info(f"  {emotion: 15s}: {count: 5d} ({percentage: 5.1f}%)")
 
         avg_intensity = total_intensity / len(results) if results else 0
-        logger.info(f"\nСредняя уверенность модели: {avg_intensity:.3f}")
+        logger.info(f"\nСредняя уверенность модели: {avg_intensity: .3f}")
         logger.info("=" * 50)
 
 
@@ -468,8 +468,8 @@ def main():
 
     elapsed = time.time() - start_time
 
-    logger.info(f"\nTotal time: {elapsed:.1f} seconds ({elapsed/60:.1f} minutes)")
-    logger.info(f"Speed: {len(results)/elapsed:.2f} files/second")
+    logger.info(f"\nTotal time: {elapsed: .1f} seconds ({elapsed / 60: .1f} minutes)")
+    logger.info(f"Speed: {len(results) / elapsed: .2f} files/second")
     logger.info(f"Results saved to: {output_file}")
 
 
