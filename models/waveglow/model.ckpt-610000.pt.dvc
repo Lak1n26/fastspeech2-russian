@@ -1,0 +1,5 @@
+outs:
+- md5: 0a6253383933cfea1692fe7160d98dca
+  size: 987152795
+  hash: md5
+  path: model.ckpt-610000.pt

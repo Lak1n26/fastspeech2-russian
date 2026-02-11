@@ -1,0 +1,5 @@
+outs:
+- md5: 8a6bcca1ba960007d80886387a37e606
+  size: 169
+  hash: md5
+  path: pitch_stats.json

@@ -1,0 +1,46 @@
+# Metrics configuration for FastSpeech2
+# Metrics are split into train, val, and inference partitions
+
+train:
+  - _target_: fastspeech2.metrics.MelSpectrogramMAE
+    name: mel_mae
+  - _target_: fastspeech2.metrics.DurationMAE
+    name: duration_mae
+  - _target_: fastspeech2.metrics.PitchMAE
+    name: pitch_mae
+  - _target_: fastspeech2.metrics.EnergyMAE
+    name: energy_mae
+
+val:
+  - _target_: fastspeech2.metrics.MelSpectrogramMAE
+    name: mel_mae
+  - _target_: fastspeech2.metrics.MelSpectrogramMSE
+    name: mel_mse
+  - _target_: fastspeech2.metrics.MelSpectrogramL2Norm
+    name: mel_l2
+  - _target_: fastspeech2.metrics.DurationAccuracy
+    name: duration_accuracy
+    tolerance: 5
+  - _target_: fastspeech2.metrics.DurationMAE
+    name: duration_mae
+  - _target_: fastspeech2.metrics.PitchMAE
+    name: pitch_mae
+  - _target_: fastspeech2.metrics.EnergyMAE
+    name: energy_mae
+
+inference:
+  - _target_: fastspeech2.metrics.MelSpectrogramMAE
+    name: mel_mae
+  - _target_: fastspeech2.metrics.MelSpectrogramMSE
+    name: mel_mse
+  - _target_: fastspeech2.metrics.MelSpectrogramL2Norm
+    name: mel_l2
+  - _target_: fastspeech2.metrics.DurationAccuracy
+    name: duration_accuracy
+    tolerance: 5
+  - _target_: fastspeech2.metrics.DurationMAE
+    name: duration_mae
+  - _target_: fastspeech2.metrics.PitchMAE
+    name: pitch_mae
+  - _target_: fastspeech2.metrics.EnergyMAE
+    name: energy_mae

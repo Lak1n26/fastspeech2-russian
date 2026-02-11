@@ -1,145 +1,363 @@
-# PyTorch Template for DL projects
+# Text-to-Speech (TTS)
+
 
 <p align="center">
-  <a href="#about">About</a> •
-  <a href="#tutorials">Tutorials</a> •
-  <a href="#examples">Examples</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#how-to-use">How To Use</a> •
-  <a href="#useful-links">Useful Links</a> •
-  <a href="#credits">Credits</a> •
-  <a href="#license">License</a>
+  <a href="#установка">Установка</a> •
+  <a href="#быстрый-старт">Быстрый старт</a> •
+  <a href="#демо">Демо</a> •
+  <a href="#доступные-конфигурации">Доступные конфигурации</a> •
+  <a href="#структура-проекта">Структура проекта</a> •
+  <a href="#результаты-финальной-модели">Результаты</a> •
 </p>
 
 <p align="center">
 <a href="https://github.com/Blinorot/pytorch_project_template/generate">
   <img src="https://img.shields.io/badge/use%20this-template-green?logo=github">
 </a>
-<a href="https://github.com/Blinorot/pytorch_project_template/blob/main/LICENSE">
+<a href="https://github.com/Lak1n26/fastspeech2-russian/blob/main/LICENSE">
    <img src=https://img.shields.io/badge/license-MIT-blue.svg>
 </a>
-<a href="https://github.com/Blinorot/pytorch_project_template/blob/main/CITATION.cff">
+<a href="https://github.com/Lak1n26/fastspeech2-russian/blob/main/CITATION.cff">
    <img src="https://img.shields.io/badge/cite-this%20repo-purple">
 </a>
 </p>
 
-## About
+## О проекте
 
-This repository contains a template for [PyTorch](https://pytorch.org/)-based Deep Learning projects.
-
-The template utilizes different python-dev techniques to improve code readability. Configuration methods enhance reproducibility and experiments control.
-
-The repository is released as a part of the [HSE DLA course](https://github.com/markovka17/dla), however, can easily be adopted for any DL-task.
-
-This template is the official recommended template for the [EPFL CS-433 ML Course](https://www.epfl.ch/labs/mlo/machine-learning-cs-433/).
-
-> 📖 **If you use this template in your work, please cite this repository or include a reference. Attribution supports the project and encourages continued development.**
-
-## Tutorials
-
-This template utilizes experiment tracking techniques, such as [WandB](https://docs.wandb.ai/) and [Comet ML](https://www.comet.com/docs/v2/), and [Hydra](https://hydra.cc/docs/intro/) for the configuration. It also automatically reformats code and conducts several checks via [pre-commit](https://pre-commit.com/). If you are not familiar with these tools, we advise you to look at the tutorials below:
-
-- [Python Dev Tips](https://github.com/ebezzam/python-dev-tips): information about [Git](https://git-scm.com/doc), [pre-commit](https://pre-commit.com/), [Hydra](https://hydra.cc/docs/intro/), and other stuff for better Python code development. The YouTube recording of the workshop is available [here](https://youtu.be/okxaTuBdDuY).
-
-- [Seminar on R&D Coding 2025](https://youtu.be/PE1zaW5it_A): Seminar from the [LauzHack Deep Learning Bootcamp](https://github.com/LauzHack/deep-learning-bootcamp/) with discussion on logging, project-based coding, configuration, and reproducibility. The materials can be found [here](https://github.com/LauzHack/deep-learning-bootcamp/tree/summer25/day05).
-
-- [Seminar on R&D Coding 2024](https://youtu.be/sEA-Js5ZHxU): Seminar from the [LauzHack Deep Learning Bootcamp](https://github.com/LauzHack/deep-learning-bootcamp/) with template discussion and reasoning. It also explains how to work with [WandB](https://docs.wandb.ai/). The seminar materials can be found [here](https://github.com/LauzHack/deep-learning-bootcamp/blob/main/day03/Seminar_WandB_and_Coding.ipynb).
-
-- [HSE DLA Course Introduction Week](https://github.com/markovka17/dla/tree/2024/week01): combines the two seminars above into one with some updates, including an extra example for [Comet ML](https://www.comet.com/docs/v2/).
-
-- [PyTorch Basics](https://github.com/markovka17/dla/tree/2024/week01/intro_to_pytorch): several notebooks with [PyTorch](https://pytorch.org/docs/stable/index.html) basics and corresponding seminar recordings from the [LauzHack Deep Learning Bootcamp](https://github.com/LauzHack/deep-learning-bootcamp/).
-
-To start working with a template, just click on the `use this template` button.
-
-<a href="https://github.com/Blinorot/pytorch_project_template/generate">
-  <img src="https://img.shields.io/badge/use%20this-template-green?logo=github">
-</a>
-
-You can choose any of the branches as a starting point. [Set your choice as the default branch](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/changing-the-default-branch) in the repository settings. You can also [delete unnecessary branches](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository).
-
-## Examples
+Реализация с нуля модели FastSpeech2 для синтеза речи на русском языке. Модель обучена на наборе данных RUSLAN. Используется предобученный вокодер - WaveGlow.
 
 > [!IMPORTANT]
-> The main branch leaves some of the code parts empty or fills them with dummy examples, showing just the base structure. The final users can add code required for their own tasks.
+> **Эта модель поддерживает только русский язык.**
 
-You can find examples of this template completed for different tasks in other branches:
+## Установка
 
-- [Image classification](https://github.com/Blinorot/pytorch_project_template/tree/example/image-classification): simple classification problem on [MNIST](https://yann.lecun.com/exdb/mnist/) and [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html) datasets.
-
-- [ASR](https://github.com/Blinorot/pytorch_project_template/tree/example/asr): template for the automatic speech recognition (ASR) task. Some of the parts (for example, `collate_fn` and beam search for `text_encoder`) are missing for studying purposes of [HSE DLA course](https://github.com/markovka17/dla).
-
-## Installation
-
-Installation may depend on your task. The general steps are the following:
-
-0. (Optional) Create and activate new environment using [`conda`](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html) or `venv` ([`+pyenv`](https://github.com/pyenv/pyenv)).
-
-   a. `conda` version:
-
-   ```bash
-   # create env
-   conda create -n project_env python=PYTHON_VERSION
-
-   # activate env
-   conda activate project_env
-   ```
-
-   b. `venv` (`+pyenv`) version:
-
-   ```bash
-   # create env
-   ~/.pyenv/versions/PYTHON_VERSION/bin/python3 -m venv project_env
-
-   # alternatively, using default python version
-   python3 -m venv project_env
-
-   # activate env
-   source project_env/bin/activate
-   ```
-
-1. Install all required packages
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. Install `pre-commit`:
-   ```bash
-   pre-commit install
-   ```
-
-## How To Use
-
-To train a model, run the following command:
+1. Клонирование репозиторий:
 
 ```bash
-python3 train.py -cn=CONFIG_NAME HYDRA_CONFIG_ARGUMENTS
+git clone https://github.com/Lak1n26/fastspeech2-russian.git
+cd fastspeech2-russian
 ```
 
-Where `CONFIG_NAME` is a config from `src/configs` and `HYDRA_CONFIG_ARGUMENTS` are optional arguments.
-
-To run inference (evaluate the model or save predictions):
+2. Создание виртуальной среды:
 
 ```bash
-python3 inference.py HYDRA_CONFIG_ARGUMENTS
+conda create -n fs2 python=3.10
+conda activate fs2
 ```
 
-## Useful Links:
+3. Установка зависимостей:
 
-You may find the following links useful:
+```bash
+pip install -r requirements.txt
+```
 
-- [Report branch](https://github.com/Blinorot/pytorch_project_template/tree/report): Guidelines for writing a scientific report/paper (with an emphasis on DL projects).
+4. (Опционально) Получить данные через DVC
 
-- [CLAIRE Template](https://github.com/CLAIRE-Labo/python-ml-research-template): additional template by [EPFL CLAIRE Laboratory](https://www.epfl.ch/labs/claire/) that can be combined with ours to enhance experiments reproducibility via [Docker](https://www.docker.com/).
+```bash
+# Для inference - только модель
+dvc pull saved/fastspeech2_training data/phoneme_vocabulary.txt
 
-- [Mamba](https://github.com/mamba-org/mamba) and [Poetry](https://python-poetry.org/): alternatives to [Conda](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html) and [pip](https://pip.pypa.io/en/stable/installation/) package managers given above.
+# Для обучения - features
+dvc pull data/features data/phoneme_vocabulary.txt
 
-- [Awesome README](https://github.com/matiassingers/awesome-readme): a list of awesome README files for inspiration. Check the basics [here](https://github.com/PurpleBooth/a-good-readme-template).
+# Для полной разработки - всё
+dvc pull
 
-## Credits
+# Подробнее см. раздел "Data Version Control (DVC)"
+```
 
-This repository is based on a heavily modified fork of [pytorch-template](https://github.com/victoresque/pytorch-template) and [asr_project_template](https://github.com/WrathOfGrapes/asr_project_template) repositories.
+5. (опционально) Установка pre-commit hooks:
 
-## License
+```bash
+pre-commit install
+```
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+6. (опционально) Настройка ключей API для запуска обучения:
+
+```bash
+export COMET_API_KEY=YOUR_API_KEY
+```
+
+7. (Опционально) Установить Montreal Forced Aligner
+
+> [!IMPORTANT]
+> **MFA должен быть установлен через conda, НЕ через pip!**
+
+```bash
+# Создать отдельное окружение для MFA
+conda create -n mfa python=3.10
+conda activate mfa
+conda install -c conda-forge montreal-forced-aligner
+
+# Проверить установку
+mfa version
+
+# Загрузить модели для русского языка
+mfa model download acoustic russian_mfa
+mfa model download dictionary russian_mfa
+```
+
+## Подготовка данных
+
+```bash
+# 1. Подготовить корпус для MFA
+python prepare_mfa_corpus.py \
+    --metadata data/metadata_RUSLAN_22200.csv \
+    --audio_dir data/RUSLAN \
+    --output_dir data/ruslan_mfa_corpus
+
+# 2. Запустить MFA alignment
+mfa align \
+    data/ruslan_mfa_corpus \
+    russian_mfa \
+    russian_mfa \
+    data/ruslan_alignments \
+    --clean \
+    --num_jobs 8
+
+# 3. Извлечь duration из alignments
+python extract_duration_from_mfa.py \
+    --alignments_dir data/ruslan_alignments \
+    --output_dir data/features/duration \
+    --hop_length 256 \
+    --sample_rate 22050
+
+# 4. Создать словарь фонем
+python create_phoneme_vocabulary.py \
+    --phonemes_dir data/features/phonemes \
+    --output_path data/phoneme_vocabulary.txt
+
+# 5. Извлечь остальные features
+python preprocess_ruslan.py \
+    --output_dir data/features \
+    --num_workers 4
+
+# 6. Генерация text_tokens из phonemes
+python generate_text_tokens.py
+```
+
+
+
+## Быстрый старт
+
+### One-Batch Test
+
+```bash
+python3 train.py --config-name=onebatch_test
+```
+
+
+### Обучение на RUSLAN:
+
+```bash
+python3 train.py -cn fastspeech2_train
+```
+
+
+### Обучение с пользовательскими параметрами
+
+```bash
+python train.py -cn fastspeech2_train \
+    trainer.n_epochs=200 \
+    optimizer.lr=1e-3 \
+    dataloader.batch_size=32
+```
+
+
+### Инференс
+
+```bash
+# простая генерация
+python inference.py \
+    --checkpoint saved/onebatch_test/model_best.pth \
+     --text "Кого интересуют признания литературного неудачника?" \
+    --output output.npy
+```
+
+```bash
+# с управлением характеристиками
+python inference.py \
+    --checkpoint saved/models/fastspeech2/best_model.pth \
+    --text "Привет, как дела?" \
+    --output output.npy \
+    --duration_control 0.8 \  # 20% быстрее
+    --pitch_control 1.2 \     # 20% выше
+    --energy_control 1.1      # 10% громче
+```
+
+
+```bash
+# batch inference по файлу
+python inference.py \
+    --checkpoint saved/models/fastspeech2/best_model.pth \
+    --text_file inference_texts.txt \
+    --output_dir outputs/
+```
+
+## Демо
+
+Пример работы с проектом представлен в [demo.ipynb](demo.ipynb)
+
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1k66tV3N9oRbSrvUoDNajxskdjwaTUW3w?usp=sharing?usp%3Dsharing)
+
+
+
+## Доступные конфигурации
+
+### Основные конфигурации
+
+| Конфигурация | Описание |
+|--------------|----------|
+| `onebatch_test` | One-Batch Test |
+| `fastspeech2_train` | Обучение основной модели |
+| `fastspeech2_v1_finetuning` | Дообучение основной модели |
+| `fastspeech2_emotion_finetune_phase1` | Добавление дополнительного контроля эмоций (бОльшая часть весов заморожена) |
+| `fastspeech2_emotion_finetune_phase2` | Добавление дополнительного контроля эмоций (все веса разморожены, низкий LR) |
+
+### Параметры управления
+
+- **duration_control**: скорость речи
+  - `< 1.0` - быстрее (0.8 = на 20% быстрее)
+  - `= 1.0` - нормально
+  - `> 1.0` - медленнее (1.2 = на 20% медленнее)
+
+- **pitch_control**: высота тона
+  - `< 1.0` - ниже (мужской голос)
+  - `= 1.0` - нормально
+  - `> 1.0` - выше (женский голос)
+
+- **energy_control**: громкость
+  - `< 1.0` - тише
+  - `= 1.0` - нормально
+  - `> 1.0` - громче
+
+- **emotion_control**: эмоция
+   - `= 0.0` - нейтрально
+   - `= 1.0` - нормально
+
+
+
+## Структура проекта
+
+
+```
+fastspeech2-russian/
+├── fastspeech2/                     # Основной модуль
+│   ├── configs/                     # Hydra конфигурации
+│   │   ├── dataloader/              # Настройки DataLoader
+│   │   │   ├── overfit.yaml
+│   │   │   ├── tts_features.yaml
+│   │   │   ├── tts_inference.yaml
+│   │   │   └── tts_train.yaml
+│   │   ├── datasets/                # Настройки датасетов
+│   │   │   ├── ruslan_features.yaml
+│   │   │   ├── ruslan_features_emotion.yaml
+│   │   │   └── ruslan_overfit_split.yaml
+│   │   ├── metrics/                 # Настройки метрик
+│   │   │   └── metrics.yaml
+│   │   ├── model/                   # Настройки моделей
+│   │   │   ├── fastspeech2.yaml
+│   │   │   └── fastspeech2_large.yaml
+│   │   ├── writer/                  # Настройки логгеров
+│   │   │   ├── cometml.yaml
+│   │   │   └── wandb.yaml
+│   │   ├── onebatch_test.yaml       # One-batch overfitting test
+│   │   ├── fastspeech2_train.yaml   # Основное обучение
+│   │   ├── fastspeech2_v1_finetuning.yaml      # Fine-tuning v1
+│   │   ├── fastspeech2_emotion_finetune_phase1.yaml  # Emotion: Phase 1
+│   │   └── fastspeech2_emotion_finetune_phase2.yaml  # Emotion: Phase 2
+│   ├── datasets/                    # Dataset классы
+│   │   ├── base_dataset.py          # Базовый датасет
+│   │   ├── collate.py               # Collate функции
+│   │   ├── data_utils.py            # Утилиты для данных
+│   │   ├── example.py               # Пример датасета
+│   │   ├── feature_extraction.py    # Извлечение признаков
+│   │   ├── ruslan_dataset.py        # Датасет RUSLAN (raw audio)
+│   │   ├── ruslan_feature_dataset.py # Датасет RUSLAN (features)
+│   │   └── tts_collate.py           # TTS collate функции
+│   ├── logger/                      # Система логирования
+│   │   ├── logger.py                # Базовый логгер
+│   │   ├── logger_config.json       # Конфигурация логирования
+│   │   ├── utils.py                 # Утилиты логирования
+│   │   ├── cometml.py               # CometML интеграция
+│   │   └── wandb.py                 # Weights & Biases интеграция
+│   ├── loss/                        # Loss функции
+│   │   └── fastspeech2_loss.py      # FastSpeech2 loss
+│   ├── metrics/                     # Метрики
+│   │   ├── base_metric.py           # Базовая метрика
+│   │   ├── tracker.py               # Трекер метрик
+│   │   └── tts_metrics.py           # TTS метрики
+│   ├── model/                       # Модель FastSpeech2
+│   │   ├── blocks.py                # Multi-Head Attention, FFT Block
+│   │   ├── encoder_decoder.py       # Encoder & Decoder
+│   │   ├── variance_adaptor.py      # Duration/Pitch/Energy/Emotion predictors
+│   │   └── fastspeech2.py           # Полная модель FastSpeech2
+│   ├── trainer/                     # Training loop
+│   │   ├── base_trainer.py          # Базовый трейнер
+│   │   ├── trainer.py               # TTS трейнер
+│   │   └── inferencer.py            # Inference класс
+│   └── utils/                       # Утилиты
+│       ├── audio_utils.py           # Аудио утилиты
+│       ├── init_utils.py            # Инициализация
+│       ├── io_utils.py              # I/O утилиты
+│       ├── train_utils.py           # Утилиты обучения (freezing/unfreezing)
+│       └── tts_utils.py             # TTS утилиты
+├── data/                            # Данные (→ DVC)
+│   ├── RUSLAN.dvc                   # Аудио файлы RUSLAN
+│   ├── metadata_RUSLAN_22200.csv.dvc # Метаданные датасета
+│   ├── features.dvc                 # Извлеченные признаки (mel/pitch/energy/duration)
+│   ├── ruslan_alignments.dvc        # MFA alignments (TextGrid)
+│   ├── phoneme_vocabulary.txt.dvc   # Словарь фонем
+│   ├── phoneme_to_idx.txt.dvc       # Маппинг фонем в индексы
+│   ├── pitch_stats.json.dvc         # Статистика pitch для нормализации
+│   ├── dataset_audio_stats.json.dvc # Статистика аудио
+│   ├── transcriptions_clean_ruslan.txt.dvc  # Чистые транскрипции
+│   ├── emotion_labels_hf_test.json.dvc      # Эмоциональные метки
+│   └── .gitignore                   # Игнорируемые файлы данных
+├── scripts/                         # Вспомогательные скрипты
+│   ├── annotation/                  # Скрипты аннотации
+│   │   └── annotate_emotions_hf.py  # Аннотация эмоций через HuggingFace
+│   └── preprocessing/               # Скрипты предобработки
+│       ├── prepare_mfa_corpus.py    # Подготовка корпуса для MFA
+│       ├── extract_duration_from_mfa.py  # Извлечение duration из MFA
+│       ├── preprocess_ruslan.py     # Предобработка датасета RUSLAN
+│       ├── create_phoneme_vocabulary.py  # Создание словаря фонем
+│       ├── generate_text_tokens.py  # Генерация токенов текста
+│       └── prepare_transcriptions.py  # Подготовка транскрипций
+├── waveglow/                        # WaveGlow вокодер
+│   ├── model.py                     # Модель WaveGlow
+│   ├── modules.py                   # Модули WaveGlow
+│   ├── dataset.py                   # Датасет для WaveGlow
+│   └── logging.py                   # Логирование WaveGlow
+├── .dvc/                            # DVC конфигурация
+│   ├── config                       # Remote storage настройки
+│   └── .gitignore                   # DVC служебные файлы
+├── train.py                         # Скрипт обучения
+├── inference.py                     # Скрипт inference
+├── demo.ipynb                       # Демо ноутбук
+├── report.md                        # Отчет об экспериментах
+├── requirements.txt                 # Python зависимости
+├── waveglow_params.json             # Параметры WaveGlow
+├── CITATION.cff                     # Информация для цитирования
+├── LICENSE                          # MIT License
+├── README.md                        # Этот файл
+├── .gitignore                       # Git игнорируемые файлы
+└── .dvcignore                       # DVC игнорируемые файлы
+```
+
+
+## Результаты финальной модели
+
+| Метрика           | Значение  |
+|-------------------|-----------|
+| val loss          |    2.029  |
+| mel MAE           |    0.102  |
+| Duration Accuracy |    97.8%  |
+| Pitch MAE         |    0.420  |
+| Energy MAE        |    0.094  |
+
+Более подробно результаты экспериментов описаны в [Отчете](report.md)
+
+## Лицензия
+
+MIT License

@@ -1,0 +1,21 @@
+# Dataloader for overfitting test
+# Small batch size to see individual sample convergence
+
+_target_: torch.utils.data.DataLoader
+
+# Use all 4 samples in one batch
+batch_size: 4
+
+# No shuffling - same order every epoch
+shuffle: false
+
+# Single worker for reproducibility
+num_workers: 0
+
+# Collate function (no parameters needed)
+collate_fn:
+  _target_: fastspeech2.datasets.TTSFeaturesCollate
+
+# Standard settings
+pin_memory: true
+drop_last: false

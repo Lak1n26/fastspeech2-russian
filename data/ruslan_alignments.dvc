@@ -1,0 +1,6 @@
+outs:
+- md5: 55ab1b50d264e88ef25969fbb4163c4f.dir
+  size: 183455233
+  nfiles: 22200
+  hash: md5
+  path: ruslan_alignments

@@ -1,0 +1,5 @@
+outs:
+- md5: 45b28ce9a15746b09f9e33818913b7f3
+  size: 102613415
+  hash: md5
+  path: fastspeech2_v1_epoch251.pth

@@ -101,14 +101,16 @@ ENV/
 .mypy_cache/
 
 # input data, saved log, checkpoints, hydra outputs
-data/
+# Note: actual data is ignored, but .dvc metadata files are tracked
+/data/RUSLAN/
+/data/features/
+/data/ruslan_alignments/
+/data/ruslan_mfa_corpus/
+/data/*.zip
+/data/*.csv
 input/
 saved/
 wandb/
 .cometml-runs/
+.cometml-runs/
 outputs/
-
-# editor, os cache directory
-.vscode/
-.idea/
-__MACOSX/

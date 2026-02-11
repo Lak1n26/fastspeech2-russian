@@ -1,0 +1,21 @@
+_target_: fastspeech2.logger.CometMLWriter
+project_name: "tts-project"
+workspace: null  # Your Comet ML workspace name
+api_key: null  # API key (or set COMET_API_KEY env variable)
+run_id: null  # For resuming existing experiment (will be auto-filled from checkpoint)
+run_name: "fastspeech2_training"  # If null, CometML will generate a random name
+mode: "online"  # "online" or "offline"
+save_code: false  # Save code to CometML (disabled to avoid uploading large data folders)
+log_checkpoints: false  # Log checkpoints to CometML (disabled, use DVC instead)
+id_length: 32  # Length of the run_id
+
+# Loss tracking
+loss_names: ["loss", "mel_loss", "duration_loss", "pitch_loss", "energy_loss", "emotion_loss"]
+
+# FastSpeech2-specific logging settings
+log_spectrograms: true  # Log mel-spectrogram visualizations
+log_pitch: true  # Log pitch contour visualizations
+log_energy: true  # Log energy contour visualizations
+log_duration: true  # Log duration comparison visualizations
+log_audio: false  # Log synthesized audio (requires vocoder)
+log_frequency: 50  # Log visualizations every N steps

@@ -1,0 +1,37 @@
+# Datasets configuration for overfit test
+# Single dataset used for both train and val
+
+train:
+  _target_: fastspeech2.datasets.RUSLANFeatureDataset
+
+  # Data paths
+  features_dir: data/features
+  metadata_path: data/metadata_RUSLAN_22200.csv
+
+  # Vocabulary
+  vocabulary_path: data/phoneme_vocab.json
+  emotion_labels_path: "data/emotion_labels_hf_test.json"
+
+  # No transforms
+  instance_transforms: null
+
+  # Limit to first 4 samples only
+  max_samples: 4
+
+# Use same samples for validation (to check overfitting)
+val:
+  _target_: fastspeech2.datasets.RUSLANFeatureDataset
+
+  # Data paths
+  features_dir: data/features
+  metadata_path: data/metadata_RUSLAN_22200.csv
+
+  # Vocabulary
+  vocabulary_path: data/phoneme_vocab.json
+  emotion_labels_path: "data/emotion_labels_hf_test.json"
+
+  # No transforms
+  instance_transforms: null
+
+  # Limit to same 4 samples
+  max_samples: 4

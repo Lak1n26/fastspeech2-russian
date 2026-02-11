@@ -1,0 +1,16 @@
+# Transforms configuration for FastSpeech2
+# Currently not used as we work with pre-extracted features
+# This file can be used if you want to add data augmentation
+
+instance_transforms:
+  train: null  # No instance transforms needed for pre-extracted features
+  inference: null  # No instance transforms needed for inference
+
+# Example of possible transforms (commented out):
+# instance_transforms:
+#   train:
+#     - _target_: some_augmentation_module.TimeStretch
+#       rate: 1.1
+#     - _target_: some_augmentation_module.PitchShift
+#       n_steps: 2
+#   inference: null

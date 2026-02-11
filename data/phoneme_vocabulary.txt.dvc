@@ -1,0 +1,5 @@
+outs:
+- md5: 0425253fa00b68ba9b1c224abdcc6875
+  size: 363
+  hash: md5
+  path: phoneme_vocabulary.txt

@@ -1,0 +1,5 @@
+outs:
+- md5: 247c02626e05ff640739e014e91611e1
+  size: 3596087
+  hash: md5
+  path: transcriptions_clean_ruslan.txt

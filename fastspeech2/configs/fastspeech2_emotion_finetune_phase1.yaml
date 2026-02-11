@@ -1,0 +1,101 @@
+defaults:
+  - model: fastspeech2
+  - writer: cometml
+  - datasets: ruslan_features_emotion  # Use dataset with emotion labels
+  - dataloader: tts_features
+  - metrics: null  # Optional: metrics configuration
+  - _self_
+
+# Optimizer for Phase 1 ULTRA-CONSERVATIVE - only emotion components
+optimizer:
+  _target_: torch.optim.AdamW
+  lr: 1e-4  # Higher LR since only emotion components are trained
+  betas: [0.9, 0.98]
+  eps: 1e-9
+  weight_decay: 1e-6
+
+# Learning rate scheduler
+lr_scheduler:
+  _target_: torch.optim.lr_scheduler.OneCycleLR
+  max_lr: 1e-4
+  pct_start: 0.1
+  anneal_strategy: cos
+  total_steps: null  # Will be set by trainer
+
+# Loss function with emotion loss
+loss_function:
+  _target_: fastspeech2.loss.FastSpeech2LossWrapper
+  mel_loss_type: mae  # 'mae' or 'mse'
+  lambda_mel: 7.0
+  lambda_duration: 1.0
+  lambda_pitch: 0.05
+  lambda_energy: 0.05
+  lambda_emotion: 5.0  # Higher weight for emotion since it's the only thing training
+
+# Metrics for evaluation
+metrics:
+  train:
+    - _target_: fastspeech2.metrics.MelSpectrogramMAE
+      name: mel_mae
+    - _target_: fastspeech2.metrics.DurationMAE
+      name: duration_mae
+    - _target_: fastspeech2.metrics.PitchMAE
+      name: pitch_mae
+    - _target_: fastspeech2.metrics.EnergyMAE
+      name: energy_mae
+
+  val:
+    - _target_: fastspeech2.metrics.MelSpectrogramMAE
+      name: mel_mae
+    - _target_: fastspeech2.metrics.MelSpectrogramMSE
+      name: mel_mse
+    - _target_: fastspeech2.metrics.MelSpectrogramL2Norm
+      name: mel_l2
+    - _target_: fastspeech2.metrics.DurationAccuracy
+      name: duration_accuracy
+      tolerance: 5
+    - _target_: fastspeech2.metrics.DurationMAE
+      name: duration_mae
+    - _target_: fastspeech2.metrics.PitchMAE
+      name: pitch_mae
+    - _target_: fastspeech2.metrics.EnergyMAE
+      name: energy_mae
+
+# Trainer settings for ULTRA-CONSERVATIVE Phase 1
+# Only emotion predictor and embedding are trained!
+trainer:
+  n_epochs: 10  # More epochs since we're training fewer parameters
+  epoch_len: null  # Number of batches per epoch
+  log_step: 100
+  device_tensors: ["text_tokens", "mel", "duration", "pitch", "energy", "emotion"]  # Added emotion
+  resume_from: null  # Set path to your pre-trained checkpoint (e.g., "saved/fastspeech2_v1_epoch251.pth")
+  device: auto  # "cpu", "cuda", or "auto"
+  override: false
+  monitor: "min val_loss"  # Monitor validation loss
+  save_period: 1  # Save checkpoint every N epochs
+  early_stop: 15  # Early stopping patience
+  save_dir: "saved"
+  seed: 42
+  grad_clip_thresh: 1.0  # Gradient clipping threshold
+  max_grad_norm: 1.0  # Max gradient norm for clipping
+  use_amp: false  # Automatic Mixed Precision (set to true for faster GPU training)
+
+  # Ultra-conservative emotion fine-tuning - ONLY emotion components trainable
+  freeze_encoder_decoder: true  # Freeze encoder/decoder
+  freeze_all_except_emotion: true  # NEW! Freeze everything except emotion
+  unfreeze_after_epoch: null
+  force_new_cometml_run: true  # Set to true to create new CometML experiment even when resuming
+  reset_epoch_counter: true  # Reset epoch counter - n_epochs will mean "how many epochs to train"
+
+# Vocoder configuration (for audio logging)
+vocoder:
+  enabled: true
+  checkpoint_path: "saved/waveglow/model.ckpt-610000.pt"
+  params_path: "waveglow_params.json"
+
+# Inference settings
+inference:
+  duration_control: 1.0  # Speed control (1.0 = normal)
+  pitch_control: 1.0     # Pitch control (1.0 = normal)
+  energy_control: 1.0    # Energy control (1.0 = normal)
+  emotion_control: 1.0   # Emotion control (1.0 = full emotion, 0.0 = neutral)

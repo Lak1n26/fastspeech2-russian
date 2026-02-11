@@ -1,0 +1,5 @@
+outs:
+- md5: fb195b7093d6df2142932495b490edae
+  size: 620
+  hash: md5
+  path: phoneme_to_idx.txt

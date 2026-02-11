@@ -1,0 +1,30 @@
+_target_: fastspeech2.model.FastSpeech2
+
+# Vocabulary
+vocab_size: 89  # Update based on your vocabulary
+
+# Model dimensions
+d_model: 256
+encoder_layers: 4
+decoder_layers: 4
+num_heads: 2
+d_ff: 1024
+dropout: 0.1
+
+# Mel-spectrogram parameters
+n_mels: 80
+
+# Sequence parameters
+max_seq_len: 5000
+
+# Variance adaptor parameters
+n_bins: 256
+
+# Pitch parameters (Hz)
+pitch_min: 80.0
+pitch_max: 400.0
+pitch_stats_path: "data/pitch_stats.json"
+
+# Energy parameters
+energy_min: 0.0
+energy_max: 1.0

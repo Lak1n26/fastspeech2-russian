@@ -1,0 +1,6 @@
+[core]
+    remote = yandex_s3
+
+[remote "yandex_s3"]
+    url = s3://fastspeech2-russian/data
+    endpointurl = https://storage.yandexcloud.net

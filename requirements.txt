@@ -1,14 +1,27 @@
-torch==2.2.0
-torchvision==0.17.0
+torch>=2.6.0  # Требуется >= 2.6 для transformers из-за CVE-2025-32434
+torchvision>=0.20.0  # Совместимая версия с torch 2.6+
+torchaudio>=2.6.0  # Совместимая версия с torch 2.6+
 torchmetrics
-numpy==1.26.4
+numpy>=2.0
 tqdm
 matplotlib
 pandas
-wandb
 comet_ml
 hydra-core
+librosa
+textgrid  # For MFA alignment parsing
+pyworld  # For pitch extraction (optional but recommended)
+pillow  # For image processing in logging
+gruut[ru]  # For G2P (Grapheme-to-Phoneme) conversion - pure Python alternative
+soundfile  # For audio file reading
+httpx  # For async HTTP requests in emotion annotation
+transformers>=4.35.0  # For emotion classification via HF (>=4.35 для поддержки trust_remote_code)
 
+# Data versioning
+dvc[s3]  # DVC with S3 support
+dvc-gdrive  # Google Drive remote (optional)
+
+# Development dependencies
 black
 isort
 pre-commit
