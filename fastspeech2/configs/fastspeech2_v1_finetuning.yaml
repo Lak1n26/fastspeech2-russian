@@ -6,15 +6,12 @@ defaults:
   - metrics: null
   - _self_
 
-# CometML settings for fine-tuning
 writer:
   run_name: "fastspeech2_v1_finetuning_epoch186-286"
 
-# Override dataloader for fine-tuning (larger batch size)
 dataloader:
   batch_size: 128
 
-# Optimizer (lower LR for fine-tuning)
 optimizer:
   _target_: torch.optim.AdamW
   lr: 2e-4
@@ -22,24 +19,19 @@ optimizer:
   eps: 1e-9
   weight_decay: 1e-6
 
-# Learning rate scheduler (CosineAnnealingLR steps every batch)
-# IMPORTANT: T_max should match actual remaining steps
-# With batch_size=128: ~41 batches/epoch × 100 epochs (186→286) = ~4100 steps
 lr_scheduler:
   _target_: torch.optim.lr_scheduler.CosineAnnealingLR
-  T_max: 4100  # Adjusted for remaining epochs
-  eta_min: 1e-6  # Keep LR from going too low
+  T_max: 4100
+  eta_min: 1e-6
 
-# Loss function (increased lambda_mel for better spectrograms)
 loss_function:
   _target_: fastspeech2.loss.FastSpeech2LossWrapper
   mel_loss_type: mae
   lambda_mel: 10.0
   lambda_duration: 1.0
-  lambda_pitch: 0.03  # Slightly reduced to give more weight to mel
+  lambda_pitch: 0.03
   lambda_energy: 0.03
 
-# Metrics for evaluation
 metrics:
   train:
     - _target_: fastspeech2.metrics.MelSpectrogramMAE
@@ -68,13 +60,12 @@ metrics:
     - _target_: fastspeech2.metrics.EnergyMAE
       name: energy_mae
 
-# Trainer settings
 trainer:
-  n_epochs: 286  # 186 (current) + ~100 (fine-tuning)
-  epoch_len: null  # Use full dataloader length
+  n_epochs: 286
+  epoch_len: null
   log_step: 100
   device_tensors: ["text_tokens", "mel", "duration", "pitch", "energy"]
-  resume_from: "checkpoint-epoch186.pth"  # Resume from latest checkpoint
+  resume_from: "checkpoint-epoch186.pth"
   device: auto
   override: false
   monitor: "min val_loss"
@@ -86,13 +77,11 @@ trainer:
   max_grad_norm: 1.0
   use_amp: false
 
-# Vocoder configuration (for audio logging)
 vocoder:
   enabled: true
   checkpoint_path: "saved/waveglow/model.ckpt-610000.pt"
   params_path: "waveglow_params.json"
 
-# Inference settings
 inference:
   duration_control: 1.0
   pitch_control: 1.0

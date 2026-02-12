@@ -1,33 +1,23 @@
-# FastSpeech2 Large - Optimized for quality on A100
-# ~30M parameters (comparable to original FastSpeech2)
+_target_: fastspeech2.models.FastSpeech2
 
-_target_: fastspeech2.model.FastSpeech2
-
-# Vocabulary
 vocab_size: 89
 
-# Model dimensions - INCREASED for better quality
-d_model: 384  # Increased from 256 (50% more capacity)
-encoder_layers: 6  # Increased from 4
-decoder_layers: 6  # Increased from 4
-num_heads: 4  # Increased from 2 (better attention patterns)
-d_ff: 1536  # 4x d_model (standard ratio)
-dropout: 0.2  # Slightly higher for regularization
+d_model: 384
+encoder_layers: 6
+decoder_layers: 6
+num_heads: 4
+d_ff: 1536
+dropout: 0.2
 
-# Mel-spectrogram parameters
 n_mels: 80
 
-# Sequence parameters
 max_seq_len: 5000
 
-# Variance adaptor parameters
 n_bins: 256
 
-# Pitch parameters (Hz) - from pitch_stats.json
 pitch_min: 80.0
 pitch_max: 400.0
 pitch_stats_path: "data/pitch_stats.json"
 
-# Energy parameters
 energy_min: 0.0
 energy_max: 1.0

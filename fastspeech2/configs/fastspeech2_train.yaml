@@ -1,12 +1,11 @@
 defaults:
   - model: fastspeech2
   - writer: cometml
-  - datasets: ruslan_features  # Use pre-extracted features
+  - datasets: ruslan_features
   - dataloader: tts_features
-  - metrics: null  # Optional: metrics configuration
+  - metrics: null
   - _self_
 
-# Optimizer
 optimizer:
   _target_: torch.optim.AdamW
   lr: 1e-4
@@ -14,24 +13,21 @@ optimizer:
   eps: 1e-9
   weight_decay: 1e-6
 
-# Learning rate scheduler
 lr_scheduler:
   _target_: torch.optim.lr_scheduler.OneCycleLR
   max_lr: 5e-4
   pct_start: 0.1
   anneal_strategy: cos
-  total_steps: null  # Will be set by trainer
+  total_steps: null
 
-# Loss function
 loss_function:
   _target_: fastspeech2.loss.FastSpeech2LossWrapper
-  mel_loss_type: mae  # 'mae' or 'mse'
+  mel_loss_type: mae
   lambda_mel: 6.0
   lambda_duration: 1.0
   lambda_pitch: 0.05
   lambda_energy: 0.05
 
-# Metrics for evaluation
 metrics:
   train:
     - _target_: fastspeech2.metrics.MelSpectrogramMAE
@@ -60,34 +56,29 @@ metrics:
     - _target_: fastspeech2.metrics.EnergyMAE
       name: energy_mae
 
-# Trainer settings
 trainer:
   n_epochs: 150
-  epoch_len: 162  # Number of batches per epoch
+  epoch_len: 162
   log_step: 162
   device_tensors: ["text_tokens", "mel", "duration", "pitch", "energy"]
-  resume_from: null  # null or path to checkpoint
-  device: auto  # "cpu", "cuda", or "auto"
+  resume_from: null
+  device: auto
   override: false
-  monitor: "min val_loss"  # Monitor validation loss
-  save_period: 1  # Save checkpoint every N epochs
-  early_stop: 150  # NO Early stopping
+  monitor: "min val_loss"
+  save_period: 1
+  early_stop: 150
   save_dir: "saved"
   seed: 42
-  grad_clip_thresh: 1.0  # Gradient clipping threshold
-  max_grad_norm: 1.0  # Max gradient norm for clipping
-  use_amp: false  # Automatic Mixed Precision (set to true for faster GPU training)
+  grad_clip_thresh: 1.0
+  max_grad_norm: 1.0
+  use_amp: false
 
-# Vocoder configuration (for audio logging)
-# To enable audio logging, set enabled: true and provide paths
 vocoder:
-  enabled: true  # Set to true to enable audio logging
-  checkpoint_path: "saved/waveglow/model.ckpt-610000.pt"  # Path to vocoder checkpoint (e.g., "waveglow_256channels_universal_v5.pt")
-  params_path: "waveglow_params.json"  # Path to vocoder parameters
+  enabled: true
+  checkpoint_path: "saved/waveglow/model.ckpt-610000.pt"
+  params_path: "waveglow_params.json"
 
-
-# Inference settings
 inference:
-  duration_control: 1.0  # Speed control (1.0 = normal)
-  pitch_control: 1.0     # Pitch control (1.0 = normal)
-  energy_control: 1.0    # Energy control (1.0 = normal)
+  duration_control: 1.0
+  pitch_control: 1.0
+  energy_control: 1.0

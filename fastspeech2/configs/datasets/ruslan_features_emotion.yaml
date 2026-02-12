@@ -3,14 +3,14 @@ train:
   metadata_path: "data/metadata_RUSLAN_22200.csv"
   data_dir: "data/RUSLAN"
   features_dir: "data/features"
-  load_audio: false  # Set to true if you need raw audio too
+  load_audio: false
   vocabulary_path: "data/vocabulary.txt"
-  emotion_labels_path: "data/emotion_labels_hf_test.json"  # Path to emotion labels
+  emotion_labels_path: "data/emotion_labels_hf_test.json"
   max_audio_length: 220500
   min_audio_length: 44100
   shuffle_index: true
   limit: null
-  instance_transforms: null  # No transforms needed for pre-extracted features
+  instance_transforms: null
 
 val:
   _target_: fastspeech2.datasets.RUSLANFeatureDataset

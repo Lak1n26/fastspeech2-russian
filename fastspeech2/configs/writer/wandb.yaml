@@ -1,19 +1,17 @@
 _target_: fastspeech2.logger.WandBWriter
 project_name: "fastspeech2-russian"
 entity: null
-run_name: "fastspeech2_training"  # If null, WandB will generate a random name
-mode: "online"  # "online" or "offline"
-save_code: true  # Save code to WandB
-log_checkpoints: true  # Log checkpoints to WandB
-id_length: 8  # Length of the run_id
+run_name: "fastspeech2_training"
+mode: "online"
+save_code: true
+log_checkpoints: true
+id_length: 8
 
-# Loss tracking
 loss_names: ["loss", "mel_loss", "duration_loss", "pitch_loss", "energy_loss"]
 
-# FastSpeech2-specific logging settings
-log_spectrograms: true  # Log mel-spectrogram visualizations
-log_pitch: true  # Log pitch contour visualizations
-log_energy: true  # Log energy contour visualizations
-log_duration: true  # Log duration comparison visualizations
-log_audio: false  # Log synthesized audio (requires vocoder)
-log_frequency: 50  # Log visualizations every N steps
+log_spectrograms: true
+log_pitch: true
+log_energy: true
+log_duration: true
+log_audio: false
+log_frequency: 50

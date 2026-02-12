@@ -1,8 +1,3 @@
-# Overfitting Test Configuration
-# Purpose: Verify that the model can perfectly fit a small dataset
-# Expected behavior: Loss should drop close to zero within 10-20 epochs
-# If loss doesn't drop, there's likely a bug in model/loss/optimizer
-
 defaults:
   - model: fastspeech2
   - writer: cometml
@@ -11,18 +6,14 @@ defaults:
   - _self_
 
 vocoder:
-  enabled: true  # Set to true to enable audio logging
-  checkpoint_path: "saved/waveglow/model.ckpt-610000.pt"  # Path to vocoder checkpoint (e.g., "waveglow_256channels_universal_v5.pt")
-  params_path: "waveglow_params.json"  # Path to vocoder parameters
+  enabled: true
+  checkpoint_path: "saved/waveglow/model.ckpt-610000.pt"
+  params_path: "waveglow_params.json"
 
-
-# Experiment name
 name: fastspeech2_overfit_test
 
-# Number of GPUs
 n_gpu: 1
 
-# Loss function
 loss_function:
   _target_: fastspeech2.loss.FastSpeech2LossWrapper
   mel_loss_type: mae
@@ -31,7 +22,6 @@ loss_function:
   lambda_pitch: 1.0
   lambda_energy: 1.0
 
-# Metrics
 metrics:
   train:
     - _target_: fastspeech2.metrics.MelSpectrogramMAE
@@ -56,51 +46,42 @@ metrics:
     - _target_: fastspeech2.metrics.MelSpectrogramMAE
       name: mel_mae
 
-# Optimizer - higher learning rate for faster convergence
 optimizer:
   _target_: torch.optim.AdamW
-  lr: 0.001  # Higher LR
+  lr: 0.001
   betas: [0.9, 0.98]
   eps: 1e-9
-  weight_decay: 0.0  # No regularization
+  weight_decay: 0.0
 
-# LR Scheduler - constant for overfitting
 lr_scheduler:
   _target_: torch.optim.lr_scheduler.StepLR
-  step_size: 1000  # Never step
-  gamma: 1.0  # Keep constant
+  step_size: 1000
+  gamma: 1.0
 
-# Training settings
 trainer:
-  n_epochs: 6  # More epochs to ensure convergence
+  n_epochs: 6
   epoch_len: 500
   log_step: 250
   save_dir: saved/
   save_period: 10
   verbosity: 2
 
-  # Device settings
-  device: auto  # "cpu", "cuda", or "auto"
-  device_tensors: ["text_tokens", "mel", "duration", "pitch", "energy", "emotion"]  # Tensors to move to device
+  device: auto
+  device_tensors: ["text_tokens", "mel", "duration", "pitch", "energy", "emotion"]
   use_amp: true
 
-  # Validation - validate every epoch
   val_every_n_epoch: 1
 
-  # Gradient settings
   grad_norm_clip: 1.0
   accumulation_steps: 1
 
-  # Additional trainer settings
   monitor: "min val_loss"
-  early_stop: 1000  # Very large value = effectively disabled
+  early_stop: 1000
   resume_from: null
   override: false
 
-  # Reproducibility
   seed: 42
   deterministic: true
 
-# Override WandB settings for overfit test
 writer:
   run_name: "onebatch_test"
